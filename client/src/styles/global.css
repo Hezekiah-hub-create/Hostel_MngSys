@@ -1,0 +1,478 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+:root {
+  /* Colonial Grand Design System 2.0 */
+  --primary-color: #D4AF37; /* Gold */
+  --secondary-color: #0d0d0d; /* Deep Dark */
+  --bg-color: #050505;
+  --surface-color: #121212;
+  --text-color: #F8F8F0; /* Soft Bone */
+  --text-muted: #888888;
+  --accent-color: #B29124;
+  --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #F5D76E 50%, #B29124 100%);
+  --danger-color: #E74C3C;
+  --success-color: #2ECC71;
+  --glass-bg: rgba(18, 18, 18, 0.7);
+  --glass-border: rgba(212, 175, 55, 0.15);
+  --font-family-body: 'Outfit', sans-serif;
+  --font-family-title: 'Playfair Display', serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family-body);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+*::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  overflow-x: hidden;
+}
+
+/* Typography */
+h1, h2, h3 {
+  font-family: var(--font-family-title);
+  color: var(--primary-color);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: var(--accent-color);
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* Flex utilities */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Buttons */
+.btn-primary {
+  background: var(--gold-gradient);
+  color: #000;
+  border: none;
+  padding: 0.9rem 2rem;
+  border-radius: 30px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  padding: 0.8rem 1.5rem;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+  background: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+/* Inputs */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-muted);
+}
+
+.form-group input, .form-group select {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 14px;
+  border: 1px solid var(--glass-border);
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--text-color);
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus, .form-group select:focus {
+  border-color: var(--primary-color);
+}
+
+/* Layout */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+  margin-left: 250px; /* Sidebar width */
+  overflow-y: auto;
+}
+
+/* Grid */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+@media (max-width: 1024px) {
+  .grid-3 {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+/* Section Typography */
+.section-title {
+  font-size: 3.5rem;
+  font-weight: 300;
+  color: #fff;
+  letter-spacing: -1px;
+  margin-bottom: 1rem;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+/* Scroll Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+/* Featured Card Interaction */
+.featured-card {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(212, 175, 55, 0.1);
+  overflow: hidden;
+  border-radius: 24px;
+}
+
+.featured-card:hover {
+  transform: translateY(-15px);
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+.featured-card img {
+  transition: transform 0.8s ease;
+}
+
+.featured-card:hover img {
+  transform: scale(1.1);
+}
+
+/* Quick Book Bar */
+.quick-book-bar {
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 100px;
+  padding: 1rem 3rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  box-shadow: 0 15px 45px rgba(0,0,0,0.4);
+}
+
+@media (max-width: 992px) {
+  .quick-book-bar {
+    border-radius: 20px;
+    flex-direction: column;
+    padding: 2rem;
+    width: 90%;
+  }
+}
+
+/* Loading */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background: var(--surface-color);
+  border-right: 1px solid var(--glass-border);
+  position: fixed;
+  height: 100vh;
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar .logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.sidebar-item:hover, .sidebar-item.active {
+  background: rgba(212, 175, 55, 0.1);
+  color: var(--primary-color);
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+}
+
+/* Landing Page Mobile Navigation */
+.desktop-menu {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.nav-link:hover {
+  color: var(--primary-color) !important;
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.mobile-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 5%;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.mobile-dropdown a {
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.mobile-dropdown button {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Responsiveness Setup */
+@media (max-width: 992px) {
+  .desktop-menu { display: none !important; }
+  .mobile-menu-btn { display: block !important; }
+  h1 { font-size: 2.8rem !important; }
+  .section-title { font-size: 2.2rem !important; }
+  
+  .layout {
+    flex-direction: column !important;
+  }
+  
+  .main-content {
+    margin-left: 0 !important;
+    padding: 1.5rem !important;
+  }
+  
+  .sidebar {
+    width: 100% !important;
+    height: auto !important;
+    position: relative !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--glass-border) !important;
+    padding: 1.5rem !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+  
+  .sidebar-nav {
+    flex-direction: row !important;
+    gap: 1.5rem !important;
+    margin-bottom: 0 !important;
+  }
+  
+  .sidebar-bottom {
+    margin-top: 0 !important;
+    display: flex !important;
+    gap: 1.5rem !important;
+    align-items: center !important;
+  }
+
+  .quick-book-bar {
+    border-radius: 20px !important;
+    flex-direction: column !important;
+    padding: 2rem !important;
+    width: 90% !important;
+    gap: 1.5rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-3 {
+     grid-template-columns: 1fr !important;
+  }
+  
+  .flex-between {
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+  
+  h1 { font-size: 2.2rem !important; }
+  .section-title { font-size: 1.8rem !important; }
+  
+  .glass-panel {
+    padding: 1.5rem !important;
+  }
+}
+/* react-datepicker overrides for Colonial Grand */
+.react-datepicker {
+  background-color: var(--surface-color) !important;
+  color: var(--text-color) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 12px !important;
+  font-family: var(--font-family) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+}
+
+.react-datepicker__header {
+  background-color: var(--surface-color) !important;
+  border-bottom: 1px solid var(--glass-border) !important;
+  border-radius: 12px 12px 0 0 !important;
+}
+
+.react-datepicker__current-month, .react-datepicker__day-name {
+  color: #fff !important;
+}
+
+.react-datepicker__day {
+  color: #ccc !important;
+  transition: all 0.2s !important;
+}
+
+.react-datepicker__day:hover {
+  background-color: rgba(212, 175, 55, 0.2) !important;
+  color: var(--primary-color) !important;
+}
+
+.react-datepicker__day--selected, .react-datepicker__day--in-range {
+  background-color: var(--primary-color) !important;
+  color: var(--secondary-color) !important;
+  font-weight: bold !important;
+}
+
+.react-datepicker__day--disabled {
+  color: #444 !important;
+}
+
+.react-datepicker__triangle {
+  display: none !important;
+}
+
+.react-datepicker-popper {
+  z-index: 2000 !important;
+}
+
+.custom-datepicker-input {
+  width: 100%;
+  background: #000;
+  border: 1px solid #444;
+  color: #fff;
+  padding: 0.7rem;
+  border-radius: 6px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.custom-datepicker-input:focus {
+  border-color: var(--primary-color);
+}
