@@ -4,7 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
 const AuthContext = createContext();
-const getAPIUrl = () => import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}`.replace(/\/api\/?$/, '') + '/api/auth' : 'http://localhost:5000/api/auth';
+const getAPIUrl = () => {
+  const base = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  return base.replace(/\/+$/, '') + '/api/auth';
+};
 const API_URL = getAPIUrl();
 
 export const AuthProvider = ({ children }) => {
