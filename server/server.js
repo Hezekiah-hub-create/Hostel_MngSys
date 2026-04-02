@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://*.vercel.app', 'https://your-staff-app.vercel.app'] 
+    ? ['https://*.vercel.app'] 
     : ['http://localhost:5173', 'http://localhost:5174', 'http://127.0.0.1:5173', 'http://127.0.0.1:5174'],
   credentials: true
 }));

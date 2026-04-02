@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
 const AuthContext = createContext();
-const API_URL = 'http://localhost:5000/api/auth'; // Ensure backend is running on 5000
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api/auth';
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
