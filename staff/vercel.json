@@ -1,0 +1,20 @@
+{
+  "builds": [
+    {
+      "src": "client/package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist" }
+    },
+    {
+      "src": "staff/package.json",
+      "use": "@vercel/static-build",
+      "config": { "distDir": "dist" }
+    }
+  ],
+  "routes": [
+    { "src": "/staff/(.*)", "dest": "/staff/dist/$1" },
+    { "src": "/staff", "dest": "/staff/dist" },
+    { "src": "/(.*)", "dest": "/client/dist/$1" }
+  ]
+}
+
