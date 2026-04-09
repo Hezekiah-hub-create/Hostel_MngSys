@@ -85,8 +85,8 @@ a:hover { color: var(--gold-light); }
 
 .main-content {
   flex: 1;
-  margin-left: calc(var(--sidebar-width) + 40px);
-  padding: 2.5rem 4rem;
+  margin-left: var(--sidebar-width);
+  padding: 2.5rem 2.5rem;
   overflow-y: auto;
   background: 
     radial-gradient(circle at 10% 10%, rgba(212, 175, 55, 0.05), transparent 40%),

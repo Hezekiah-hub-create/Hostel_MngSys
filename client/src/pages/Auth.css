@@ -1,0 +1,9 @@
+.auth-logo-img {
+  width: 140px;
+  height: auto;
+  margin-bottom: 1.5rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(212, 175, 55, 0.4);
+  animation: float 6s ease-in-out infinite;
+  object-fit: cover;
+}

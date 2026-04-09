@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { FiMail, FiLock, FiUser, FiArrowLeft } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
+import './Auth.css';
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -40,6 +41,7 @@ const AuthPage = () => {
         color: '#fff',
         textAlign: 'center' 
       }}>
+          <img src="/CH_LOGO.jpg" alt="Colonial Grand Logo" className="auth-logo-img" />
         <h1 style={{ fontSize: '3.5rem', marginBottom: '1rem', color: 'var(--primary-color)' }}>Colonial Grand</h1>
         <p style={{ fontSize: '1.2rem', maxWidth: '400px', lineHeight: '1.6' }}>Unlock access to exclusive rooms, direct room service, and tailored experiences.</p>
       </div>
