@@ -2,11 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
 const HotelContext = createContext();
-const getAPIUrl = () => {
-  const base = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-  return base.replace(/\/+$/, '') + '/api';
-};
-const API_URL = getAPIUrl();
+const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:5001') + '/api';
 
 export const HotelProvider = ({ children }) => {
   const [rooms, setRooms] = useState([]);

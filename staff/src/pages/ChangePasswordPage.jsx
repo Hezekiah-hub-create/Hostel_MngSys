@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { FiLock } from 'react-icons/fi';
+import { FiLock, FiShield } from 'react-icons/fi';
 
 const ChangePasswordPage = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   const { changePassword } = useAuth();
 
@@ -14,54 +15,67 @@ const ChangePasswordPage = () => {
     setError('');
     
     if (newPassword !== confirmPassword) {
-      return setError("Passwords to not match");
+      return setError("Passwords do not match");
     }
 
+    setIsSubmitting(true);
     try {
       await changePassword(newPassword);
     } catch (err) {
       setError(err);
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="layout flex-center" style={{ marginLeft: 0, minHeight: '100vh' }}>
-      <div className="glass-panel animate-fade-in" style={{ width: '100%', maxWidth: '400px' }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>Update Password</h2>
-        <p style={{ textAlign: 'center', color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
-          Welcome! As a requested security measure for walk-in accounts, please set a new password before continuing.
-        </p>
-        
-        {error && <div style={{ color: 'var(--danger-color)', marginBottom: '1rem', textAlign: 'center' }}>{error}</div>}
+    <div className="login-page-container">
+      <main className="login-main">
+        <section className="login-card">
+          <header className="branding-header">
+            <FiShield className="branding-icon" />
+            <h1 className="branding-title">Security Check</h1>
+            <p className="branding-desc">Update your credentials to proceed</p>
+          </header>
+          
+          {error && <div className="auth-alert" style={{ marginBottom: '1.5rem', textAlign: 'center' }}>{error}</div>}
 
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label><FiLock /> New Password</label>
-            <input 
-              type="password" 
-              placeholder="••••••••"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              required
-            />
-          </div>
-          
-          <div className="form-group">
-            <label><FiLock /> Confirm Password</label>
-            <input 
-              type="password" 
-              placeholder="••••••••"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
-          </div>
-          
-          <button type="submit" className="btn-primary" style={{ width: '100%', marginTop: '1rem' }}>
-            Update Password
-          </button>
-        </form>
-      </div>
+          <form onSubmit={handleSubmit} className="login-form">
+            <div className="field-group">
+              <label className="form-label"><FiLock className="icon-field" /> New Password</label>
+              <input 
+                type="password" 
+                className="form-input"
+                placeholder="••••••••"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+                disabled={isSubmitting}
+              />
+            </div>
+            
+            <div className="field-group">
+              <label className="form-label"><FiLock className="icon-field" /> Confirm Password</label>
+              <input 
+                type="password" 
+                className="form-input"
+                placeholder="••••••••"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                disabled={isSubmitting}
+              />
+            </div>
+            
+            <button type="submit" className="submit-button" disabled={isSubmitting}>
+              {isSubmitting ? 'Updating Registry...' : 'Update & Continue'}
+            </button>
+          </form>
+
+          <p className="auth-footer" style={{ marginTop: '2rem' }}>
+            Encrypted session security active
+          </p>
+        </section>
+      </main>
     </div>
   );
 };

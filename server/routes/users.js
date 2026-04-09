@@ -4,10 +4,14 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const { protect, authorize } = require('../middleware/authMiddleware');
 
-// Get all users (Admin/Manager)
-router.get('/', protect, authorize('admin', 'manager'), async (req, res) => {
+// Get users (Admin/Manager get all, Receptionist gets only clients)
+router.get('/', protect, authorize('admin', 'manager', 'receptionist'), async (req, res) => {
   try {
-    const users = await User.find().select('-password');
+    let query = {};
+    if (req.user.role === 'receptionist') {
+      query = { role: 'client' };
+    }
+    const users = await User.find(query).select('-password');
     res.json(users);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });

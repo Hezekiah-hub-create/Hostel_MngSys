@@ -1,6 +1,6 @@
-import express from 'express';
-import Guest from '../models/Guest.js';
-import { protect } from '../middleware/auth.js';
+const express = require('express');
+const Guest = require('../models/Guest');
+const { protect } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
@@ -24,4 +24,4 @@ router.post('/', protect, async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

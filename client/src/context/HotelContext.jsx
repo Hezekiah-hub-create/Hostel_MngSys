@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const HotelContext = createContext();
 const getAPIUrl = () => {
-  const base = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const base = import.meta.env.VITE_API_URL || 'http://localhost:5001';
   return base.replace(/\/+$/, '') + '/api';
 };
 const API_URL = getAPIUrl();

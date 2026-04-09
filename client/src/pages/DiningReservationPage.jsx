@@ -23,7 +23,7 @@ const DiningReservationPage = () => {
   useEffect(() => {
     const fetchTables = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/dining');
+        const { data } = await axios.get('http://localhost:5001/api/dining');
         setTables(data);
       } catch (error) {
         console.error('Failed to fetch tables', error);
@@ -43,7 +43,7 @@ const DiningReservationPage = () => {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/dining/reserve', {
+      await axios.post('http://localhost:5001/api/dining/reserve', {
         tableId: selectedTable._id,
         date: resDate,
         time: resTime,

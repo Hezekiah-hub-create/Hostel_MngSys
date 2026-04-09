@@ -13,12 +13,10 @@ import dashboardRoutes from './routes/dashboard.js';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? ['https://*.vercel.app', 'https://hostel-mng-sys-client-rg94nego0-hezekiahs-projects-8078f1c2.vercel.app']
-    : ['http://localhost:5173', 'http://localhost:5174', 'http://127.0.0.1:5173', 'http://127.0.0.1:5174'],
+  origin: ['http://localhost:5173', 'http://localhost:5174', 'http://127.0.0.1:5173', 'http://127.0.0.1:5174'],
   credentials: true
 }));
 app.use(express.json());

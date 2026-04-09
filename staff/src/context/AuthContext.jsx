@@ -5,7 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 
 const AuthContext = createContext();
 const getAPIUrl = () => {
-  const base = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  const base = import.meta.env.VITE_API_URL || 'http://localhost:5001';
   return base.replace(/\/+$/, '') + '/api/auth';
 };
 const API_URL = getAPIUrl();

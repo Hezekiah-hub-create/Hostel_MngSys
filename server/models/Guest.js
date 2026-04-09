@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const GuestSchema = new mongoose.Schema({
   fullName: { type: String, required: true },
@@ -7,4 +7,4 @@ const GuestSchema = new mongoose.Schema({
   idPassport: { type: String, required: true, unique: true }
 }, { timestamps: true });
 
-export default mongoose.model('Guest', GuestSchema);
+module.exports = mongoose.model('Guest', GuestSchema);

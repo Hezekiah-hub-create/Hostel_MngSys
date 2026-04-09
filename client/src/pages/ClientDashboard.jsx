@@ -25,7 +25,7 @@ const ClientDashboard = () => {
 
   const fetchDiningReservations = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/dining/my-reservations', {
+      const { data } = await axios.get('http://localhost:5001/api/dining/my-reservations', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setDiningReservations(data);
@@ -39,7 +39,7 @@ const ClientDashboard = () => {
   const handleCancelDining = async (id) => {
     if (window.confirm('Are you sure you want to cancel this table reservation?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/dining/reserve/${id}`, {
+        await axios.delete(`http://localhost:5001/api/dining/reserve/${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
         fetchDiningReservations();
@@ -54,7 +54,7 @@ const ClientDashboard = () => {
     navigate('/');
   };
 
-  const userBookings = bookings.filter(b => b.user === user?._id || (b.user && b.user._id === user?._id));
+  const userBookings = (bookings || []).filter(b => b.user === user?._id || (b.user && b.user._id === user?._id));
 
   const handleEditClick = (booking) => {
     setEditingBooking(booking);
