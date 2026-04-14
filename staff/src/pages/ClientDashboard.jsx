@@ -44,7 +44,7 @@ const ClientDashboard = () => {
              {rooms.map(room => (
                <div key={room._id} className="glass-panel">
                  <h3>Room {room.roomNumber} ({room.type})</h3>
-                 <p style={{ color: 'var(--primary-color)', fontSize: '1.2rem', margin: '0.5rem 0' }}>${room.price} / night</p>
+                 <p style={{ color: 'var(--primary-color)', fontSize: '1.2rem', margin: '0.5rem 0' }}>GH₵{room.price} / night</p>
                  <p style={{ color: 'var(--text-muted)' }}>Status: <span style={{ color: room.status === 'Available' ? 'var(--success-color)' : 'var(--danger-color)' }}>{room.status}</span></p>
                  <div style={{ margin: '1rem 0' }}>
                    {room.amenities.map(a => <span key={a} style={{ background: 'rgba(255,255,255,0.1)', padding: '0.2rem 0.5rem', borderRadius: '4px', marginRight: '0.5rem', fontSize: '0.8rem' }}>{a}</span>)}
@@ -77,7 +77,7 @@ const ClientDashboard = () => {
                       <td>{new Date(b.checkInDate).toLocaleDateString()}</td>
                       <td>{new Date(b.checkOutDate).toLocaleDateString()}</td>
                       <td style={{ color: 'var(--primary-color)' }}>{b.status}</td>
-                      <td>${b.totalPrice}</td>
+                      <td>GH₵{b.totalPrice}</td>
                     </tr>
                   ))}
                   {userBookings.length === 0 && <tr><td colSpan="5" style={{ padding: '1rem 0' }}>No bookings found.</td></tr>}

@@ -52,9 +52,9 @@ const ReportsPage = () => {
   };
 
   const KPIs = [
-    { icon: <FiDollarSign />,  label: 'Total Revenue',       value: `$${totalRevenue.toLocaleString()}`,   color: '#D4AF37', change: '+12%' },
+    { icon: <FiDollarSign />,  label: 'Total Revenue',       value: `GH₵${totalRevenue.toLocaleString()}`,   color: '#D4AF37', change: '+12%' },
     { icon: <FiBarChart2 />,   label: 'Total Bookings',      value: totalBookings,                          color: '#3498db', change: '+8%'  },
-    { icon: <FiTrendingUp />,  label: 'Avg Booking Value',   value: `$${avgBookingValue}`,                  color: '#2ecc71', change: '+3%'  },
+    { icon: <FiTrendingUp />,  label: 'Avg Booking Value',   value: `GH₵${avgBookingValue}`,                  color: '#2ecc71', change: '+3%'  },
     { icon: <FiPieChart />,    label: 'Occupancy Rate',      value: `${occupancyRate}%`,                    color: '#9b59b6', change: `${occupancyRate > 50 ? '+' : '-'}5%` },
     { icon: <FiCalendar />,    label: 'Checked Out Stays',   value: checkedOut.length,                      color: '#e67e22', change: '' },
     { icon: <FiBarChart2 />,   label: 'Registered Guests',   value: totalGuests,                            color: '#1abc9c', change: '' },
@@ -207,7 +207,7 @@ const ReportsPage = () => {
               <span className={`status-badge ${b.status.toLowerCase()}`}>{b.status}</span>
             </span>
             <span style={{ color: 'var(--primary-color)', fontWeight: 700 }}>
-              ${(b.totalPrice || 0).toLocaleString()}
+              GH₵${(b.totalPrice || 0).toLocaleString()}
             </span>
             <span className="text-muted" style={{ fontSize: '0.85rem' }}>
               {new Date(b.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}

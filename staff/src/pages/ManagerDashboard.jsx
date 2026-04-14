@@ -1,17 +1,33 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useHotel } from '../context/HotelContext';
 import {
   FiUsers, FiTrendingUp, FiBarChart2, FiDollarSign, FiClock,
-  FiActivity, FiArrowUpRight, FiArrowDownRight
+  FiActivity, FiArrowUpRight, FiArrowDownRight, FiRefreshCw
 } from 'react-icons/fi';
 
 const ManagerDashboard = () => {
-  const { rooms, bookings, fetchRooms, fetchBookings } = useHotel();
+  const { 
+    rooms, bookings, fetchRooms, fetchBookings, runAutoCheckout 
+  } = useHotel();
+  const [isCleaning, setIsCleaning] = useState(false);
 
   useEffect(() => {
     fetchRooms();
     fetchBookings();
   }, [fetchRooms, fetchBookings]);
+
+  const handleManualCleanup = async () => {
+    if (!window.confirm('Trigger system-wide auto-checkout cleanup?')) return;
+    setIsCleaning(true);
+    try {
+      const result = await runAutoCheckout();
+      alert(`Cleanup Complete: ${result.bookingsUpdated} bookings processed.`);
+    } catch (err) {
+      alert(err);
+    } finally {
+      setIsCleaning(false);
+    }
+  };
 
   /* ── Metrics ── */
   const totalRooms       = rooms.length;
@@ -55,7 +71,7 @@ const ManagerDashboard = () => {
       sub: `${checkedIn} checked in today`, color: '#3498db', trend: null,
     },
     {
-      icon: <FiDollarSign />, label: 'Total Revenue', value: `$${revenue.toLocaleString()}`,
+      icon: <FiDollarSign />, label: 'Total Revenue', value: `GH₵${revenue.toLocaleString()}`,
       sub: 'from completed stays', color: '#2ecc71', trend: <FiArrowUpRight />,
     },
     {
@@ -78,11 +94,25 @@ const ManagerDashboard = () => {
     <div className="animate-fade-in">
 
       {/* ── Header ── */}
-      <div style={{ marginBottom: '2rem' }}>
-        <h1 style={{ fontFamily: 'var(--font-family-title)', color: 'var(--primary-color)', marginBottom: '0.4rem' }}>
-          Manager Dashboard
-        </h1>
-        <p className="text-muted">Live analytics and performance overview for Colonial Grand.</p>
+      <div style={{ marginBottom: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div>
+          <h1 style={{ fontFamily: 'var(--font-family-title)', color: 'var(--primary-color)', marginBottom: '0.4rem' }}>
+            Manager Dashboard
+          </h1>
+          <p className="text-muted">Live analytics and performance overview for Colonial Grand.</p>
+        </div>
+        <button 
+          onClick={handleManualCleanup}
+          disabled={isCleaning}
+          style={{ 
+            background: 'rgba(212,175,55,0.08)', color: 'var(--primary-color)', 
+            border: '1px solid rgba(212,175,55,0.3)', padding: '0.7rem 1.2rem', 
+            borderRadius: '10px', fontSize: '0.85rem', fontWeight: 600,
+            display: 'flex', alignItems: 'center', gap: '0.6rem', cursor: 'pointer'
+          }}
+        >
+          <FiRefreshCw className={isCleaning ? 'spin' : ''} /> {isCleaning ? 'Processing...' : 'Run Cleanup'}
+        </button>
       </div>
 
       {/* ── KPI Cards ── */}
@@ -208,8 +238,8 @@ const ManagerDashboard = () => {
               { label: 'Completed Stays',    val: checkedOut.length,         isCount: true },
               { label: 'Active Check-ins',   val: checkedIn,                  isCount: true },
               { label: 'Pending Confirms',   val: confirmed,                  isCount: true },
-              { label: 'Avg Rate per Stay',  val: `$${Math.round(revenue / (checkedOut.length || 1)).toLocaleString()}` },
-              { label: 'Total Revenue',      val: `$${revenue.toLocaleString()}`, highlight: true },
+              { label: 'Avg Rate per Stay',  val: `GH₵${Math.round(revenue / (checkedOut.length || 1)).toLocaleString()}` },
+              { label: 'Total Revenue',      val: `GH₵${revenue.toLocaleString()}`, highlight: true },
             ].map((m, i) => (
               <div key={i} className={`md-metric-row ${m.highlight ? 'highlight' : ''}`}>
                 <span className={m.highlight ? '' : 'text-muted'}>{m.label}</span>
@@ -248,7 +278,7 @@ const ManagerDashboard = () => {
                   </span>
                 </span>
                 <span style={{ color: 'var(--primary-color)', fontWeight: 700, fontSize: '0.9rem' }}>
-                  ${(b.totalPrice || 0).toLocaleString()}
+                  GH₵{(b.totalPrice || 0).toLocaleString()}
                 </span>
               </div>
             );

@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useHotel } from '../context/HotelContext';
-import { FiUsers, FiSettings, FiShield, FiDatabase, FiAlertCircle, FiKey, FiHome, FiActivity, FiCpu, FiTrendingUp, FiCheckCircle } from 'react-icons/fi';
+import { FiUsers, FiSettings, FiShield, FiDatabase, FiAlertCircle, FiKey, FiHome, FiActivity, FiCpu, FiTrendingUp, FiCheckCircle, FiRefreshCw } from 'react-icons/fi';
 
 const StatCard = ({ icon: Icon, label, value, accent, sub }) => (
   <div style={{
@@ -79,7 +79,11 @@ const OccupancyBar = ({ label, value, max, color }) => {
 };
 
 const AdminDashboard = () => {
-  const { users, rooms, bookings, fetchUsers, fetchRooms, fetchBookings } = useHotel();
+  const { 
+    users, rooms, bookings, fetchUsers, fetchRooms, 
+    fetchBookings, runAutoCheckout 
+  } = useHotel();
+  const [isCleaning, setIsCleaning] = useState(false);
 
   useEffect(() => {
     fetchUsers();
@@ -87,21 +91,34 @@ const AdminDashboard = () => {
     fetchBookings();
   }, [fetchUsers, fetchRooms, fetchBookings]);
 
+  const handleManualCleanup = async () => {
+    if (!window.confirm('Trigger system-wide auto-checkout cleanup?')) return;
+    setIsCleaning(true);
+    try {
+      const result = await runAutoCheckout();
+      alert(`Cleanup Complete: ${result.bookingsUpdated} bookings processed.`);
+    } catch (err) {
+      alert(err);
+    } finally {
+      setIsCleaning(false);
+    }
+  };
+
   const totalUsers = users.length;
   const staffUsers = users.filter(u => ['admin', 'manager', 'receptionist'].includes(u.role)).length;
   const clientUsers = users.filter(u => u.role === 'client').length;
   const needsReset = users.filter(u => u.needsPasswordChange).length;
   const totalRooms = rooms.length;
   const availableRooms = rooms.filter(r => r.status === 'Available').length;
-  const occupiedRooms = rooms.filter(r => r.status === 'Occupied').length;
+  const occupiedRooms = rooms.filter(r => r.status === 'Occupied' || r.status === 'Booked').length;
   const maintenanceRooms = rooms.filter(r => r.status === 'Maintenance').length;
   const totalBookings = bookings.length;
-  const confirmedBookings = bookings.filter(b => b.status === 'confirmed').length;
-  const checkedIn = bookings.filter(b => b.status === 'checkedin').length;
+  const confirmedBookings = bookings.filter(b => b.status === 'Confirmed').length;
+  const checkedIn = bookings.filter(b => b.status === 'CheckedIn').length;
 
   const activityItems = [
     { icon: FiCheckCircle, color: '#10b981', text: `${confirmedBookings} bookings currently confirmed`, time: 'Live' },
-    { icon: FiHome, color: '#D4AF37', text: `${occupiedRooms} rooms occupied out of ${totalRooms}`, time: 'Live' },
+    { icon: FiHome, color: '#D4AF37', text: `${occupiedRooms} rooms currently held`, time: 'Live' },
     { icon: needsReset > 0 ? FiAlertCircle : FiShield, color: needsReset > 0 ? '#ef4444' : '#10b981',
       text: needsReset > 0 ? `${needsReset} user(s) require password reset` : 'All user passwords are secure', time: 'Live' },
     { icon: FiUsers, color: '#3b82f6', text: `${checkedIn} guests currently checked in`, time: 'Live' },
@@ -132,8 +149,13 @@ const AdminDashboard = () => {
           </p>
         </div>
         <div style={{ display: 'flex', gap: '0.75rem' }}>
-          <button className="btn-secondary" style={{ fontSize: '0.85rem', padding: '0.6rem 1.25rem', borderRadius: '10px' }}>
-            Export Report
+          <button 
+            className="btn-secondary" 
+            onClick={handleManualCleanup}
+            disabled={isCleaning}
+            style={{ fontSize: '0.85rem', padding: '0.6rem 1.25rem', borderRadius: '10px', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+          >
+            <FiRefreshCw className={isCleaning ? 'spin' : ''} /> {isCleaning ? 'Cleaning...' : 'Run Auto-Checkout'}
           </button>
           <button style={{
             background: 'linear-gradient(135deg, #D4AF37, #B29124)', color: '#000',

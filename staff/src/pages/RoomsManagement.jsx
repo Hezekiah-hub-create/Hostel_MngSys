@@ -113,7 +113,7 @@ const RoomsManagement = () => {
                 <div className="rm-card-meta">
                   <div className="rm-meta-item">
                     <FiTag size={13} />
-                    <span>${room.price} / night</span>
+                    <span>GH₵{room.price} / night</span>
                   </div>
                   <div className="rm-meta-item">
                     <FiLayout size={13} />
@@ -147,7 +147,7 @@ const RoomsManagement = () => {
             <div key={room._id} className="rm-list-row">
               <span style={{ fontWeight: 700, color: 'var(--primary-color)' }}>#{room.roomNumber}</span>
               <span className="text-muted">{room.type}</span>
-              <span style={{ fontWeight: 600 }}>${room.price}<span className="text-muted" style={{ fontWeight: 400, fontSize:'0.78rem' }}>/night</span></span>
+              <span style={{ fontWeight: 600 }}>GH₵{room.price}<span className="text-muted" style={{ fontWeight: 400, fontSize:'0.78rem' }}>/night</span></span>
               <span>
                 <span className="rm-dot" style={{ background: statusColor(room.status) }} />
                 <span style={{ fontSize: '0.85rem' }}>{room.status}</span>
@@ -190,7 +190,7 @@ const RoomsManagement = () => {
                 </select>
               </div>
               <div className="form-group">
-                <label>Nightly Rate ($)</label>
+                <label>Nightly Rate (GH₵)</label>
                 <input type="number" defaultValue={selectedRoom?.price} className="form-input" />
               </div>
               <div className="form-group">

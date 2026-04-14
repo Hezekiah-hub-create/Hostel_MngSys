@@ -104,11 +104,23 @@ export const HotelProvider = ({ children }) => {
     }
   };
 
+  const runAutoCheckout = async () => {
+    try {
+      const { data } = await axios.get(`${API_URL}/cron/auto-checkout`, getHeader());
+      await fetchBookings();
+      await fetchRooms();
+      await fetchDiningReservations();
+      return data;
+    } catch (error) {
+      throw error.response?.data?.message || 'System cleanup failed';
+    }
+  };
+
   return (
     <HotelContext.Provider value={{ 
       rooms, bookings, users, diningReservations, diningTables, loadingData,
       fetchRooms, fetchBookings, fetchUsers, fetchDiningReservations, fetchDiningTables,
-      bookRoom, handleWalkIn, updateBookingStatus, updateDiningStatus 
+      bookRoom, handleWalkIn, updateBookingStatus, updateDiningStatus, runAutoCheckout 
     }}>
       {children}
     </HotelContext.Provider>
